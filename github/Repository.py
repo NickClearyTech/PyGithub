@@ -65,6 +65,7 @@
 # Copyright 2018 Yves Zumbach <yzumbach@andrew.cmu.edu>                        #
 # Copyright 2018 Leying Chen <leyingc@andrew.cmu.edu>                          #
 # Copyright 2020 Pascal Hofmann <mail@pascalhofmann.de>                        #
+# Copyright 2022 Alson van der Meulen <alson.vandermeulen@dearhealth.com>      #
 #                                                                              #
 # This file is part of PyGithub.                                               #
 # http://pygithub.readthedocs.io/                                              #
@@ -3726,8 +3727,8 @@ class Repository(github.GithubObject.CompletableGithubObject):
         deployment_branch_policy=None,
     ):
         """
-        :calls: `PUT /repos/{owner}/{repo}/environments/{environment_name} <https://docs.github.com/en/rest/reference/pulls>`_
-        :param name: string
+        :calls: `PUT /repos/{owner}/{repo}/environments/{environment_name} <https://docs.github.com/en/rest/reference/deployments#create-or-update-an-environment>`_
+        :param environment_name: string
         :param wait_timer: int
         :param reviews: List[:class:github.EnvironmentDeploymentBranchPolicy.EnvironmentDeploymentBranchPolicyParams]
         :param deployment_branch_policy: Optional[:class:github.EnvironmentDeploymentBranchPolicy.EnvironmentDeploymentBranchPolicyParams`]
@@ -3768,6 +3769,18 @@ class Repository(github.GithubObject.CompletableGithubObject):
         )
 
     update_environment = create_environment
+
+    def delete_environment(self, environment_name):
+        """
+        :calls: `DELETE /repos/{owner}/{repo}/environments/{environment_name} <https://docs.github.com/en/rest/reference/deployments#delete-an-environment>`_
+        :param environment_name: string
+        :rtype: None
+        """
+        assert isinstance(environment_name, str), environment_name
+
+        headers, data = self._requester.requestJsonAndCheck(
+            "DELETE", f"{self.url}/environments/{environment_name}"
+        )
 
     def _initAttributes(self):
         self._allow_merge_commit = github.GithubObject.NotSet
