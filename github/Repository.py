@@ -65,6 +65,7 @@
 # Copyright 2018 Yves Zumbach <yzumbach@andrew.cmu.edu>                        #
 # Copyright 2018 Leying Chen <leyingc@andrew.cmu.edu>                          #
 # Copyright 2020 Pascal Hofmann <mail@pascalhofmann.de>                        #
+# Copyright 2022 Eric Nieuwland <eric.nieuwland@gmail.com>                     #
 #                                                                              #
 # This file is part of PyGithub.                                               #
 # http://pygithub.readthedocs.io/                                              #
@@ -142,6 +143,7 @@ import github.Team
 import github.View
 import github.Workflow
 import github.WorkflowRun
+import github.CodeScanAlert
 
 from . import Consts
 
@@ -3703,6 +3705,15 @@ class Repository(github.GithubObject.CompletableGithubObject):
             "GET", f"{self.url}/check-runs/{check_run_id}"
         )
         return github.CheckRun.CheckRun(self._requester, headers, data, completed=True)
+
+    def get_codescan_alerts(self):
+        """
+        :calls: `GET https://api.github.com/repos/{owner}/{repo}/code-scanning/alerts <https://docs.github.com/en/rest/reference/code-scanning#list-code-scanning-alerts-for-a-repository>`_
+        :rtype: :class:`github.PaginatedList.PaginatedList` of :class:`github.CodeScanAlert.CodeScanAlert`
+        """
+        return github.PaginatedList.PaginatedList(
+            github.CodeScanAlert.CodeScanAlert, self._requester, f"{self.url}/code-scanning/alerts", None
+        )
 
     def _initAttributes(self):
         self._allow_merge_commit = github.GithubObject.NotSet
