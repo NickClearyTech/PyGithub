@@ -12,6 +12,9 @@ from github.Comparison import Comparison
 from github.ContentFile import ContentFile
 from github.Deployment import Deployment
 from github.Download import Download
+from github.Environment import Environment
+from github.EnvironmentDeploymentBranchPolicy import EnvironmentDeploymentBranchPolicyParams
+from github.EnvironmentProtectionRuleReviewer import ReviewerParams
 from github.Event import Event
 from github.GitBlob import GitBlob
 from github.GitCommit import GitCommit
@@ -131,6 +134,13 @@ class Repository(CompletableGithubObject):
         transient_environment: Union[bool, _NotSetType] = ...,
         production_environment: Union[bool, _NotSetType] = ...,
     ) -> Deployment: ...
+    def create_environment(
+        self,
+        environment_name: str,
+        wait_timer: int = ...,
+        reviewers: List[ReviewerParams] = ...,
+        deployment_branch_policy: Optional[EnvironmentDeploymentBranchPolicyParams] = ...,
+    ) -> Environment: ...
     def create_file(
         self,
         path: str,
@@ -252,6 +262,7 @@ class Repository(CompletableGithubObject):
     @property
     def default_branch(self) -> str: ...
     def delete(self) -> None: ...
+    def delete_environment(self, environment_name: str) -> None: ...
     def delete_file(
         self,
         path: str,
@@ -352,6 +363,8 @@ class Repository(CompletableGithubObject):
     ) -> List[ContentFile]: ...
     def get_download(self, id: int) -> Download: ...
     def get_downloads(self) -> PaginatedList[Download]: ...
+    def get_environments(self) -> PaginatedList[Environment]: ...
+    def get_environment(self, environment_name: str) -> Environment: ...
     def get_events(self) -> PaginatedList[Event]: ...
     def get_forks(self) -> PaginatedList[Repository]: ...
     def create_fork(
@@ -588,6 +601,13 @@ class Repository(CompletableGithubObject):
     @property
     def trees_url(self) -> str: ...
     def unsubscribe_from_hub(self, event: str, callback: str) -> None: ...
+    def update_environment(
+        self,
+        environment_name: str,
+        wait_timer: int = ...,
+        reviewers: List[ReviewerParams] = ...,
+        deployment_branch_policy: Optional[EnvironmentDeploymentBranchPolicyParams] = ...,
+    ) -> Environment: ...
     def update_file(
         self,
         path: str,
