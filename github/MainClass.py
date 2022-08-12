@@ -875,7 +875,7 @@ class GithubIntegration:
         )
 
         if response.status_code == 200:
-            return response.json()
+            return response.json()["slug"]
         elif response.status_code == 403:
             raise GithubException.BadCredentialsException(
                 status=response.status_code, data=response.text
