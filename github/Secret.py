@@ -95,9 +95,7 @@ class Secret(github.GithubObject.CompletableGithubObject):
         """
         if self.visibility != "selected":
             return False
-        self._requester.requestJsonAndCheck(
-            "PUT", f"{self.url}/repositories/{repo.id}"
-        )
+        self._requester.requestJsonAndCheck("PUT", f"{self.url}/repositories/{repo.id}")
         self._selected_repositories.value.append(repo)
 
     def remove_repo(self, repo):

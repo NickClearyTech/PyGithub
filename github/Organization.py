@@ -606,7 +606,7 @@ class Organization(github.GithubObject.CompletableGithubObject):
                 requester=self._requester,
                 headers={},
                 attributes={"url": f"{self.url}/actions/secrets/{secret['name']}"},
-                completed=False
+                completed=False,
             )
             for secret in data["secrets"]
         ]
@@ -622,7 +622,7 @@ class Organization(github.GithubObject.CompletableGithubObject):
             requester=self._requester,
             headers={},
             attributes={"url": f"{self.url}/actions/secrets/{secret_name}"},
-            completed=False
+            completed=False,
         )
 
     def create_secret(

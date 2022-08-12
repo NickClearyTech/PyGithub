@@ -13,7 +13,9 @@ from github.ContentFile import ContentFile
 from github.Deployment import Deployment
 from github.Download import Download
 from github.Environment import Environment
-from github.EnvironmentDeploymentBranchPolicy import EnvironmentDeploymentBranchPolicyParams
+from github.EnvironmentDeploymentBranchPolicy import (
+    EnvironmentDeploymentBranchPolicyParams,
+)
 from github.EnvironmentProtectionRuleReviewer import ReviewerParams
 from github.Event import Event
 from github.GitBlob import GitBlob
@@ -139,7 +141,9 @@ class Repository(CompletableGithubObject):
         environment_name: str,
         wait_timer: int = ...,
         reviewers: List[ReviewerParams] = ...,
-        deployment_branch_policy: Optional[EnvironmentDeploymentBranchPolicyParams] = ...,
+        deployment_branch_policy: Optional[
+            EnvironmentDeploymentBranchPolicyParams
+        ] = ...,
     ) -> Environment: ...
     def create_file(
         self,
@@ -318,9 +322,7 @@ class Repository(CompletableGithubObject):
     ) -> str: ...
     def get_assignees(self) -> PaginatedList[NamedUser]: ...
     def get_branch(self, branch: str) -> Branch: ...
-    def rename_branch(
-        self, branch: Union[str, Branch], new_name: str
-    ) -> bool: ...
+    def rename_branch(self, branch: Union[str, Branch], new_name: str) -> bool: ...
     def get_branches(self) -> PaginatedList[Branch]: ...
     def get_check_run(self, check_run_id: int) -> CheckRun: ...
     def get_check_suite(self, check_suite_id: int) -> CheckSuite: ...
@@ -606,7 +608,9 @@ class Repository(CompletableGithubObject):
         environment_name: str,
         wait_timer: int = ...,
         reviewers: List[ReviewerParams] = ...,
-        deployment_branch_policy: Optional[EnvironmentDeploymentBranchPolicyParams] = ...,
+        deployment_branch_policy: Optional[
+            EnvironmentDeploymentBranchPolicyParams
+        ] = ...,
     ) -> Environment: ...
     def update_file(
         self,

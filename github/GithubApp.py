@@ -126,6 +126,13 @@ class GithubApp(github.GithubObject.CompletableGithubObject):
         """
         return self._url.value
 
+    @property
+    def installation_count(self):
+        """
+        :type: int
+        """
+        return self._installations_count.value
+
     def _initAttributes(self):
         self._created_at = github.GithubObject.NotSet
         self._description = github.GithubObject.NotSet
@@ -139,6 +146,7 @@ class GithubApp(github.GithubObject.CompletableGithubObject):
         self._slug = github.GithubObject.NotSet
         self._updated_at = github.GithubObject.NotSet
         self._url = github.GithubObject.NotSet
+        self._installations_count = github.GithubObject.NotSet
 
     def _useAttributes(self, attributes):
         if "created_at" in attributes:  # pragma no branch
@@ -168,3 +176,7 @@ class GithubApp(github.GithubObject.CompletableGithubObject):
             self._updated_at = self._makeDatetimeAttribute(attributes["updated_at"])
         if "url" in attributes:
             self._url = self._makeStringAttribute(attributes["url"])
+        if "installations_count" in attributes:
+            self._installations_count = self._makeIntAttribute(
+                attributes["installations_count"]
+            )

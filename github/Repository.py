@@ -2283,7 +2283,9 @@ class Repository(github.GithubObject.CompletableGithubObject):
             f"{self.url}/codeowners/errors",
         )
         return [
-            github.CodeownerError.CodeownerError(self._requester, headers, element, completed=False)
+            github.CodeownerError.CodeownerError(
+                self._requester, headers, element, completed=False
+            )
             for element in data["errors"]
             if element is not None and "errors" in data.keys()
         ]
@@ -3716,7 +3718,11 @@ class Repository(github.GithubObject.CompletableGithubObject):
         :rtype: :class:`github.PaginatedList.PaginatedList` of :class:`github.CodeScanAlert.CodeScanAlert`
         """
         return github.PaginatedList.PaginatedList(
-            github.CodeScanAlert.CodeScanAlert, self._requester, f"{self.url}/code-scanning/alerts", None )
+            github.CodeScanAlert.CodeScanAlert,
+            self._requester,
+            f"{self.url}/code-scanning/alerts",
+            None,
+        )
 
     def get_environments(self):
         """

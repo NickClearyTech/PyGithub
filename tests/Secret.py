@@ -3,7 +3,6 @@ from . import Framework
 
 
 class Secret(Framework.TestCase):
-
     def testAttributes(self):
         org = self.g.get_organization("samdevo-test-organization")
         s = org.get_secret("TESTSECRET")
@@ -24,8 +23,7 @@ class Secret(Framework.TestCase):
         for repo_name in ["repo1", "repo2"]:
             s.add_repo(org.get_repo(repo_name))
         self.assertListEqual(
-            sorted([si.name for si in s.selected_repositories]),
-            ["repo1", "repo2"]
+            sorted([si.name for si in s.selected_repositories]), ["repo1", "repo2"]
         )
 
     def testCreateDelete(self):

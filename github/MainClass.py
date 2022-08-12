@@ -50,7 +50,7 @@
 import datetime
 import pickle
 import time
-
+import json
 import jwt
 import requests
 import urllib3
@@ -857,6 +857,55 @@ class GithubIntegration:
             )
         raise GithubException.GithubException(
             status=response.status_code, data=response.text
+        )
+
+    def get_app_slug(self):
+        """
+        Gets the name of the app that is being used here
+        We aren't returning an app object since we can't easily pass in the necessary API
+        parameters to make the app object usable for future api calls
+        """
+        response = requests.get(
+            f"{self.base_url}/app",
+            headers={
+                "Authorization": f"Bearer {self.create_jwt()}",
+                "Accept": Consts.mediaTypeIntegrationPreview,
+                "User-Agent": "PyGithub/Python",
+            },
+        )
+
+        if response.status_code == 200:
+            return response.json()["slug"]
+        elif response.status_code == 403:
+            raise GithubException.BadCredentialsException(
+                status=response.status_code, data=response.text
+            )
+        elif response.status_code == 404:
+            raise GithubException.UnknownObjectException(
+                status=response.status_code, data=response.text
+            )
+        raise GithubException.GithubException(
+            status=response.status_code, data=response.text
+        )
+
+    def get_installations(self):
+
+        return github.PaginatedList.PaginatedList(
+            github.Installation.Installation,
+            Requester(
+                login_or_token=None,
+                password=None,
+                jwt=self.create_jwt(expiration=600),
+                base_url=DEFAULT_BASE_URL,
+                timeout=DEFAULT_TIMEOUT,
+                user_agent="PyGithub/Python",
+                per_page=DEFAULT_PER_PAGE,
+                verify=True,
+                retry=None,
+                pool_size=None,
+            ),
+            f"{self.base_url}/app/installations",
+            None,
         )
 
     def get_installation(self, owner, repo):

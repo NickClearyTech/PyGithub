@@ -29,7 +29,7 @@ class CodeownerError(github.GithubObject.NonCompletableGithubObject):
     """
 
     def __repr__(self):
-        return self.get__repr__({"message": self._message.value.split('\n')[0]})
+        return self.get__repr__({"message": self._message.value.split("\n")[0]})
 
     @property
     def line(self):
